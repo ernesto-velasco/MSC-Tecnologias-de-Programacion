@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Editoriales | Registrar</title>
+    <script type="text/javascript" src="./../src/js/bulma.js"></script>
+    <link rel="stylesheet" href="./../src/css/style.css" />
+  </head>
+  <body>
+    <header id="header">
+      <nav class="navbar mb-3" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img
+              src="https://bulma.io/images/bulma-logo.png"
+              width="112"
+              height="28"
+              alt="brand image"
+            />
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-end">
+            <a href="./libroIndex.html" class="navbar-item"> Libros </a>
+            <a href="./autorIndex.html" class="navbar-item"> Autores </a>
+            <a href="./editorialIndex.html" class="navbar-item">
+              Editoriales
+            </a>
+            <a href="./generoIndex.html" class="navbar-item"> Generos </a>
+            <a href="./favoritos.html" class="navbar-item"> Favoritos </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container is-max-desktop">
+      <!-- !breadcrumb -->
+      <!-- <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><a href="#">Bulma</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Components</a></li>
+          <li class="is-active">
+            <a href="#" aria-current="page">Breadcrumb</a>
+          </li>
+        </ul>
+      </nav> -->
+      <div
+        class="
+          is-flex is-align-content-space-around is-justify-content-space-between
+        "
+      >
+        <p class="title is-4 my-3">Registrar editorial</p>
+        <div class="actions">
+          <button
+            type="submit"
+            form="form"
+            class="button is-primary is-outlined is-small"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+      <div class="notification is-primary is-hidden" id="msg-success"></div>
+      <div class="notification is-warning is-hidden" id="msg-warning"></div>
+      <div class="box" id="form-box ">
+        <form onsubmit="handleSubmit(event);" method="post" id="form">
+          <div class="field">
+            <label class="label" for="nombre">Nombre</label>
+            <div class="control">
+              <input
+                class="input"
+                type="text"
+                name="nombre"
+                placeholder="Planeta"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script async type="text/javascript">
+      function handleSubmit(event) {
+        event.preventDefault();
+        let formData = new FormData(event.target);
+        let object = {};
+        formData.forEach(function (value, key) {
+          object[key] = value;
+        });
+        console.log(object);
+
+        async function send() {
+          console.log("send");
+          let req = new XMLHttpRequest();
+          console.log(req);
+          req.open("POST", "http://127.0.0.1:5000/registrarEditorial");
+          req.setRequestHeader("Content-Type", "application/json");
+          req.onload = function () {
+            console.log("onload");
+            let arrayBuffer = JSON.parse(req.response);
+            console.log(arrayBuffer);
+            let success = document.querySelector("#msg-success");
+            let warning = document.querySelector("#msg-warning");
+            if (req.status === 200) {
+              //* SUCCESS
+              success.innerHTML = arrayBuffer.message;
+              success.classList.remove("is-hidden");
+              warning.innerHTML = "";
+              warning.classList.add("is-hidden");
+            } else {
+              warning.innerHTML = arrayBuffer.message;
+              warning.classList.remove("is-hidden");
+              success.innerHTML = "";
+              success.classList.add("is-hidden");
+            }
+          };
+          req.send(JSON.stringify(object));
+        }
+        send();
+      }
+    </script>
+  </body>
+</html>

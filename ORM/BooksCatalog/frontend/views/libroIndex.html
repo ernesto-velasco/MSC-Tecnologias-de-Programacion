@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catalogo de libros</title>
+    <script type="text/javascript" src="./../src/js/bulma.js"></script>
+    <link rel="stylesheet" href="./../src/css/style.css" />
+  </head>
+  <body>
+    <header id="header">
+      <nav class="navbar mb-3" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+          <a class="navbar-item" href="https://bulma.io">
+            <img
+              src="https://bulma.io/images/bulma-logo.png"
+              width="112"
+              height="28"
+              alt="brand image"
+            />
+          </a>
+
+          <a
+            role="button"
+            class="navbar-burger"
+            aria-label="menu"
+            aria-expanded="false"
+            data-target="navbarBasicExample"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+          <div class="navbar-end">
+            <a href="./libroIndex.html" class="navbar-item"> Libros </a>
+            <a href="./autorIndex.html" class="navbar-item"> Autores </a>
+            <a href="./editorialIndex.html" class="navbar-item">
+              Editoriales
+            </a>
+            <a href="./generoIndex.html" class="navbar-item"> Generos </a>
+            <a href="./favoritos.html" class="navbar-item"> Favoritos </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="container is-max-desktop">
+      <!-- !breadcrumb -->
+      <!-- <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><a href="#">Bulma</a></li>
+          <li><a href="#">Documentation</a></li>
+          <li><a href="#">Components</a></li>
+          <li class="is-active">
+            <a href="#" aria-current="page">Breadcrumb</a>
+          </li>
+        </ul>
+      </nav> -->
+      <div
+        class="
+          is-flex is-align-content-space-around is-justify-content-space-between
+        "
+      >
+        <p class="title is-4 my-3">Catalogo de libros</p>
+        <div class="actions">
+          <a href="./libroCrear.html" class="button is-light is-small"
+            >+ Registrar nuevo</a
+          >
+          <!-- <a href="./libroEditar.html" class="button is-light is-small"
+            >Editar un registro</a
+          > -->
+        </div>
+      </div>
+      <div class="notification is-primary is-hidden">
+        This container is <strong>centered</strong> on desktop and larger
+        viewports.
+      </div>
+      <div class="notification is-primary is-hidden" id="msg-success"></div>
+      <div class="notification is-warning is-hidden" id="msg-warning"></div>
+      <div class="" id="table-box"></div>
+    </div>
+    <script type="module">
+      // OBTENER
+      import { buildTable } from "./../src/js/tables.js";
+      (() => {
+        let req = new XMLHttpRequest();
+        req.open("GET", "http://127.0.0.1:5000/obtenerLibros");
+        req.onload = () => {
+          let data = JSON.parse(req.response);
+          if (req.status === 200) {
+            console.log(data);
+            buildTable(data, ["id"], ["editar", "favoritos"]);
+          }
+        };
+        req.send();
+      })();
+    </script>
+    <script type="text/javascript">
+      // ELIMINAR
+      function eliminar(id) {
+        let req = new XMLHttpRequest();
+        req.open("DELETE", "http://127.0.0.1:5000/eliminarLibro/" + id);
+        req.setRequestHeader("Content-Type", "application/json");
+        req.onload = () => {
+          let arrayBuffer = JSON.parse(req.response);
+          let success = document.querySelector("#msg-success");
+          let warning = document.querySelector("#msg-warning");
+          if (req.status === 200) {
+            success.innerHTML = arrayBuffer.message;
+            success.classList.remove("is-hidden");
+            warning.innerHTML = "";
+            warning.classList.add("is-hidden");
+            setTimeout(function () {
+              window.location.assign("libroIndex.html");
+            }, 2000);
+          } else {
+            warning.innerHTML = arrayBuffer.message;
+            warning.classList.remove("is-hidden");
+            success.innerHTML = "";
+            success.classList.add("is-hidden");
+          }
+        };
+        req.send(null);
+      }
+
+      function editar(id) {
+        window.location.assign('./libroEditar.html?libro=' + id);
+      }
+
+      async function favoritos(id) {
+        event.preventDefault();
+        let object = {
+          id_libro: id,
+        };
+        let req = new XMLHttpRequest();
+        console.log(req);
+        req.open("POST", "http://127.0.0.1:5000/agregarFavorito");
+        req.setRequestHeader("Content-Type", "application/json");
+        req.onload = function () {
+          console.log("onload");
+          let arrayBuffer = JSON.parse(req.response);
+          console.log(arrayBuffer);
+          let success = document.querySelector("#msg-success");
+          let warning = document.querySelector("#msg-warning");
+          if (req.status === 200) {
+            //* SUCCESS
+            success.innerHTML = arrayBuffer.message;
+            success.classList.remove("is-hidden");
+            warning.innerHTML = "";
+            warning.classList.add("is-hidden");
+          } else {
+            warning.innerHTML = arrayBuffer.message;
+            warning.classList.remove("is-hidden");
+            success.innerHTML = "";
+            success.classList.add("is-hidden");
+          }
+        };
+        req.send(JSON.stringify(object));
+        send();
+      }
+    </script>
+  </body>
+</html>

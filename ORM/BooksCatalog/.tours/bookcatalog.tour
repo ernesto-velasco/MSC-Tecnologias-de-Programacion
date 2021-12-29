@@ -1,0 +1,106 @@
+{
+  "$schema": "https://aka.ms/codetour-schema",
+  "title": "BookCatalog",
+  "steps": [
+    {
+      "file": "backend/run.py",
+      "description": "Se importan los módulos de python",
+      "line": 2
+    },
+    {
+      "file": "backend/run.py",
+      "description": "Se configura el servidor",
+      "line": 8
+    },
+    {
+      "file": "backend/run.py",
+      "description": "Se crean los módelos",
+      "line": 13
+    },
+    {
+      "file": "backend/run.py",
+      "description": "Se crean los módelos",
+      "line": 50
+    },
+    {
+      "file": "backend/run.py",
+      "description": "Se crean las rutas",
+      "line": 89
+    },
+    {
+      "file": "backend/run.py",
+      "description": "registro",
+      "line": 145
+    },
+    {
+      "file": "backend/run.py",
+      "description": "obtener registros",
+      "line": 211
+    },
+    {
+      "file": "backend/run.py",
+      "description": "Editar",
+      "line": 365
+    },
+    {
+      "file": "backend/run.py",
+      "description": "eliminar",
+      "line": 316
+    },
+    {
+      "file": "backend/run.py",
+      "description": "Se inicializa el servidor",
+      "line": 387
+    },
+    {
+      "file": "frontend/views/libroCrear.html",
+      "description": "frontend:",
+      "line": 1
+    },
+    {
+      "file": "frontend/views/libroIndex.html",
+      "description": "función para eliminar",
+      "line": 103
+    },
+    {
+      "file": "frontend/views/libroIndex.html",
+      "description": "funcion para ir a la vista de editar: se envia el id del libro mediante los parametros de la url",
+      "line": 129
+    },
+    {
+      "file": "frontend/views/libroEditar.html",
+      "description": "Despues de obtener la información de los select, se llama a la función para obetener la información del libro ",
+      "line": 246,
+      "selection": {
+        "start": {
+          "line": 195,
+          "character": 16
+        },
+        "end": {
+          "line": 195,
+          "character": 24
+        }
+      }
+    },
+    {
+      "file": "frontend/views/libroEditar.html",
+      "description": "se obtiene la infroamción del libro a traves del parametro get en la url y se asignan los valores a los input del libro",
+      "line": 195
+    },
+    {
+      "file": "frontend/views/libroCrear.html",
+      "description": "en el form se asigna una función en el evento onsubmit",
+      "line": 78
+    },
+    {
+      "file": "frontend/views/libroCrear.html",
+      "description": "Funcuón JS para obtener datos mediante XMLHTTPRequest()",
+      "line": 169
+    },
+    {
+      "file": "frontend/views/libroCrear.html",
+      "description": "Se envia el formulario para registrar",
+      "line": 202
+    }
+  ]
+}

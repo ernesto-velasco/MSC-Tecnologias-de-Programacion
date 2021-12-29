@@ -1,0 +1,18 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma-rtl.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bakbak+One&family=Roboto&display=swap');
+* {
+    font-family: 'Google Sans', 'Roboto', sans-serif;
+}
+
+.title {
+    font-family: 'Bakbak One', 'Google Sans', 'Roboto', sans-serif;
+}
+
+thead { 
+    font-weight: bold;
+}
+
+tbody { 
+    border: 1px solid #ccc;
+}
